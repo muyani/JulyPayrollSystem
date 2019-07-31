@@ -22,12 +22,23 @@ def create_tables():
 # registering a route
 @app.route('/')
 # function to run when clients visit this route
-def hello_world():
+def home():
     return render_template('index.html')
 
 @app.route('/name')
 def name():
     return "Muyani Letina"
+
+
+@app.route('/newDepartment',methods=['POST'])
+def newDepartment():
+    pass
+
+@app.route('/newEmployee',methods=['POST'])
+def newEmployee():
+    pass
+
+
 
 
 # run flask
