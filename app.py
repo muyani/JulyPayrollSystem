@@ -14,7 +14,7 @@ from models.Employees import EmployeesModel
 from models.Departments import DepartmentModel
 
 
-
+# this decorator will tell flask to run this function before any other route
 @app.before_first_request
 def create_tables():
     db.create_all()
