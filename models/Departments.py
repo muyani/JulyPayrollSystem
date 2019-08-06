@@ -18,6 +18,9 @@ class DepartmentModel(db.Model):
     @classmethod
     def fetch_by_name(cls,name):
         return cls.query.filter_by(name = name).first()
+    @classmethod
+    def fetch_by_id(cls,dept_id):
+        return cls.query.filter_by(id=dept_id).first()
 
     @classmethod
     def fetch_all(cls):

@@ -23,8 +23,13 @@ def create_tables():
 @app.route('/employees/<int:dept_id>')
 def employees(dept_id):
     departments = DepartmentModel.fetch_all()
-    return render_template('employees.html', idara=departments)
+    this_department = DepartmentModel.fetch_by_id(dept_id)
+    employees = this_department.employees
+    return render_template('employees.html', idara=departments,employees = employees)
 
+@app.route('/payrolls/<int:emp_id>')
+def payrolls(emp_id):
+    return render_template('payrolls.html')
 
 # registering a route
 @app.route('/')
@@ -53,9 +58,14 @@ def newEmployee():
     gender = request.form['gender']
     national_id = request.form['national_id']
     email = request.form['email']
-    department_id = request.form['department']
+    department_id = int(request.form['department'])
     basic_salary = request.form['basic_salary']
     benefits = request.form['benefits']
+    emp = EmployeesModel(full_name=name_of_employee,gender=gender,kra_pin=kra_pin,email=email,national_id=national_id,
+                         department_id=department_id,basic_salary=basic_salary,benefits=benefits)
+    emp.insert_to_db()
+    return redirect(url_for('home'))
+
 
 
 # run flask
