@@ -2,6 +2,10 @@
 from flask import Flask,render_template,request,redirect,url_for,flash
 from flask_sqlalchemy import SQLAlchemy
 from config import Development,Testing
+from resources.employees import Employee
+
+
+
 
 
 # instantiating class flask
@@ -22,14 +26,14 @@ def create_tables():
 
 @app.route('/employees/<int:dept_id>')
 def employees(dept_id):
-    departments = DepartmentModel.fetch_all()
     this_department = DepartmentModel.fetch_by_id(dept_id)
     employees = this_department.employees
-    return render_template('employees.html', idara=departments,employees = employees)
+    return render_template('employees.html',this_department = this_department)
 
 @app.route('/payrolls/<int:emp_id>')
 def payrolls(emp_id):
-    return render_template('payrolls.html')
+    employee = EmployeesModel.fetch_by_id(emp_id)
+    return render_template('payrolls.html',employee = employee)
 
 # registering a route
 @app.route('/')
@@ -38,6 +42,20 @@ def home():
     departments = DepartmentModel.fetch_all()
     print(departments)
     return render_template('index.html',idara = departments)
+
+@app.route('/generate_payroll/<int:id>',methods = ['POST'])
+def generate_payroll(id):
+    this_employee = EmployeesModel.fetch_by_id(id)
+    payroll = Employee(this_employee.full_name,this_employee.basic_salary,this_employee.benefits)
+    nhif = payroll.nhif
+    print("NSSF",payroll.nssf)
+    print("PAYE",payroll.payeTax)
+    print("NET",payroll.netSalary)
+    print("Gross",payroll.grossSalary)
+    print("Personal Relief",payroll.personal_relief)
+    print("Taxable amount",payroll.chargeable_pay)
+
+
 
 @app.route('/newDepartment',methods=['POST'])
 def newDepartment():

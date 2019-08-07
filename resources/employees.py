@@ -279,3 +279,8 @@ class Employee:
               '- The actual tax returned is KSH', self.payeTax, '.\n'
               '- NHIF Contributions are KSH', self.nhif, '.\n'
               '- Finally, the amount transferred to the account', self.name, '\n is KSH', self.netSalary)
+
+
+
+
+

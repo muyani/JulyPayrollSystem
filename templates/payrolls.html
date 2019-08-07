@@ -9,63 +9,52 @@
 <body>
 
 <!-- Button trigger modal for Employee -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newEmployee">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#generatePayroll">
     Generate payroll
 </button>
 
-<!-- Modal for Employee -->
-<div class="modal fade" id="newEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<!-- Modal for Payroll -->
+<div class="modal fade" id="generatePayroll" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Employee</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Generate payroll</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/newEmployee" method="post">
+                <form action="/generate_payroll/{{ employee.id }}" method="post">
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Name of Employee</label>
-                        <input required type="text" class="form-control" id="formGroupExampleInput"
-                               placeholder="Employee">
-                    </div>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput">KRA pin</label>
-                        <input required type="text" class="form-control" id="formGroupExampleInput"
-                               placeholder="kra pin">
+                        <label for="formGroupExampleInput">Month</label>
+                        <input name="month" required type="text" class="form-control"
+                               id="formGroupExampleInput"
+                               placeholder="eg JAN2019">
                     </div>
 
                     <div class="form-group">
-                        <label for="formGroupExampleInput">National Id</label>
-                        <input required type="text" class="form-control" id="formGroupExampleInput"
-                               placeholder="national id">
+                        <label for="formGroupExampleInput">Overtime?</label>
+                        <input name="overtime" value=0 required type="number" class="form-control"
+                               id="formGroupExampleInput"
+                               placeholder="overtime">
                     </div>
 
 
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Email</label>
-                        <input required type="email" class="form-control" id="formGroupExampleInput"
-                               placeholder="enter email">
-                    </div>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput">Basic Salary</label>
-                        <input required type="number" class="form-control" id="formGroupExampleInput"
-                               placeholder="enter basic salary">
+                        <label for="formGroupExampleInput">Any Loan Deduction?</label>
+                        <input name="loan" value=0 required type="number" class="form-control"
+                               id="formGroupExampleInput"
+                               placeholder="loan deduction">
                     </div>
 
-
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Department</label>
-                        <select required class="form-control">
-                            {% for each in idara %}
-                                <option>{{ each.name }}</option>
-                            {% endfor %}
-                        </select>
+                        <label for="formGroupExampleInput">Salary advance</label>
+                        <input required value=0 type="number" class="form-control" id="formGroupExampleInput"
+                               placeholder="advance">
                     </div>
-                    <input type="submit" class="form-control btn btn-primary"
-                    >
+
+                    <input type="submit" class="form-control btn btn-primary">
 
                 </form>
 
@@ -77,37 +66,36 @@
 
 
 <table class="table">
-  <thead>
+    <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Gender</th>
-      <th scope="col">KRA PIN</th>
-      <th scope="col">Email</th>
-      <th scope="col">National Id</th>
-      <th scope="col">Basic Salary</th>
-      <th scope="col">Benefits</th>
-      <th scope="col">Payrolls</th>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Gender</th>
+        <th scope="col">KRA PIN</th>
+        <th scope="col">Email</th>
+        <th scope="col">National Id</th>
+        <th scope="col">Basic Salary</th>
+        <th scope="col">Benefits</th>
+        <th scope="col">Payrolls</th>
     </tr>
-  </thead>
-  <tbody>
-  {% for each in employees %}
-    <tr>
-      <th scope="row">{{ each.id }}</th>
-      <td>{{ each.full_name }}</td>
-      <td>{{ each.gender }}</td>
-      <td>{{ each.kra_pin }}</td>
-      <td>{{ each.email }}</td>
-      <td>{{ each.national_id }}</td>
-      <td>{{ each.basic_salary }}</td>
-      <td>{{ each.benefits }}</td>
-      <td><a href="/payrolls/{{ each.id }}">View Payrolls</a> </td>
-    </tr>
-  {% endfor %}
+    </thead>
+    <tbody>
+    {% for each in employees %}
+        <tr>
+            <th scope="row">{{ each.id }}</th>
+            <td>{{ each.full_name }}</td>
+            <td>{{ each.gender }}</td>
+            <td>{{ each.kra_pin }}</td>
+            <td>{{ each.email }}</td>
+            <td>{{ each.national_id }}</td>
+            <td>{{ each.basic_salary }}</td>
+            <td>{{ each.benefits }}</td>
+            <td><a href="/payrolls/{{ each.id }}">View Payrolls</a></td>
+        </tr>
+    {% endfor %}
 
-  </tbody>
+    </tbody>
 </table>
-
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
