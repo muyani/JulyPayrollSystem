@@ -57,13 +57,13 @@
                     </div>
 
 
-               <div class="form-group">
+                    <div class="form-group">
                         <label for="formGroupExampleInput">Gender</label>
-                   <select name="gender" class="form-control">
-                       <option value="na">Not Applicable</option>
-                       <option value="m">Male</option>
-                       <option value="f">Female</option>
-                   </select>
+                        <select name="gender" class="form-control">
+                            <option value="na">Not Applicable</option>
+                            <option value="m">Male</option>
+                            <option value="f">Female</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -104,6 +104,8 @@
         <th scope="col">National Id</th>
         <th scope="col">Basic Salary</th>
         <th scope="col">Benefits</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
         <th scope="col">Payrolls</th>
     </tr>
     </thead>
@@ -118,6 +120,112 @@
             <td>{{ each.national_id }}</td>
             <td>{{ each.basic_salary }}</td>
             <td>{{ each.benefits }}</td>
+            <td>
+                <!-- Button trigger modal for Edit Employee -->
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#editEmployee{{ each.id }}">
+                    Edit
+                </button>
+
+
+
+                <!-- Modal for Edit Employee -->
+                <div class="modal fade" id="editEmployee{{ each.id }}" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit Employee <i>{{ each.full_name }}</i>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/editEmployee/{{ each.id }}" method="post">
+                                    <div class="form-group">
+                                        <label for="formGroupExampleInput">Name of Employee</label>
+                                        <input value="{{ each.full_name }}" name=name required type="text"
+                                               class="form-control" id="formGroupExampleInput"
+                                               placeholder="Employee">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="formGroupExampleInput">KRA pin</label>
+                                        <input value="{{ each.kra_pin }}" name="kra_pin" required type="text"
+                                               class="form-control" id="formGroupExampleInput"
+                                               placeholder="kra pin">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="formGroupExampleInput">National Id</label>
+                                        <input value="{{ each.national_id }}" name="national_id" required type="text"
+                                               class="form-control" id="formGroupExampleInput"
+                                               placeholder="national id">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="formGroupExampleInput">Email</label>
+                                        <input value="{{ each.email }}" name="email" required type="email"
+                                               class="form-control" id="formGroupExampleInput"
+                                               placeholder="enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="formGroupExampleInput">Basic Salary</label>
+                                        <input value="{{ each.basic_salary }}" name="basic_salary" required
+                                               type="number" class="form-control"
+                                               id="formGroupExampleInput"
+                                               placeholder="enter basic salary">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="formGroupExampleInput">Gender</label>
+                                        <select name="gender" class="form-control">
+                                            <option value="na">Not Applicable</option>
+                                            <option value="m">Male</option>
+                                            <option value="f">Female</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="formGroupExampleInput">Benefits</label>
+                                        <input value="{{ each.benefits }}" name="benefits" required type="number"
+                                               class="form-control"
+                                               id="formGroupExampleInput"
+                                               placeholder="enter benefits">
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <div class="form-group">
+                                            <label for="formGroupExampleInput">Department</label>
+                                            <select name="department" required class="form-control">
+                                            <option value="0">Leave as it is</option>
+                                                {% for each in idara %}
+                                                    <option value="{{ each.id }}">{{ each.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+                                    <input type="submit" class="form-control btn btn-primary"
+                                    >
+
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </td>
+        <td><a href="/deleteEmployee/{{ each.id }}"><button class="btn btn-danger">Delete</button></a></td>
             <td><a href="/payrolls/{{ each.id }}">View Payrolls</a></td>
         </tr>
     {% endfor %}
